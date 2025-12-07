@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coffee Haven</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: #f3ebe4;
+      color: #4a3b31;
+      scroll-behavior: smooth;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-left { font-weight: bold; font-size: 1.2rem; }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-right a {
+      text-decoration: none;
+      color: #4a3b31;
+      font-weight: 500;
+      transition: 0.3s;
+      position: relative;
+    }
+    .nav-right a.active::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: #6a4e3c;
+      bottom: -4px;
+      left: 0;
+    }
+    .nav-right a:hover { color: #6a4e3c; }
+    .nav-right button {
+      padding: 8px 18px;
+      border-radius: 10px;
+      border: none;
+      background: #6a4e3c;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .nav-right button:hover { background: #8a6048; }
+
+    /* Header */
+    .header-box {
+      width: 90%;
+      margin: 30px auto;
+      background: linear-gradient(135deg, #c7a27c, #e2c7a1);
+      border-radius: 25px;
+      padding: 40px;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .header-info h1 { font-size: 3rem; margin: 0 0 20px 0; }
+    .header-info p { width: 100%; max-width: 350px; opacity: 0.9; }
+    .header-img { height: 220px; border-radius: 20px; object-fit: cover; animation: floatImg 3s ease-in-out infinite; }
+    @keyframes floatImg { 0% {transform: translateY(0);} 50% {transform: translateY(-8px);} 100% {transform: translateY(0);} }
+
+    /* Section titles */
+    .section-title {
+      margin: 100px 40px 20px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      scroll-margin-top: 90px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 0.8s;
+    }
+    .section-title.visible { opacity: 1; transform: translateY(0); }
+
+    /* Coffee grid */
+    .coffee-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      padding: 0 40px;
+    }
+    .coffee-card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .coffee-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: 0.6s;
+    }
+    .coffee-card:hover { transform: translateY(-5px); box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
+    .coffee-card img { width: 100%; border-radius: 10px; object-fit: cover; height: 180px; }
+
+    /* Brew list */
+    .brew-list { margin-top: 10px; padding: 0 40px; }
+    .brew-item {
+      background: #fff;
+      padding: 18px;
+      border-radius: 15px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .brew-item:hover { transform: translateX(5px); box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
+    .brew-item img { width: 100px; height: 100px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+
+    @media (max-width: 768px) {
+      .coffee-grid { grid-template-columns: 1fr; }
+      .header-box { flex-direction: column; text-align: center; }
+      .header-img { margin-top: 20px; height: 180px; }
+      .brew-item { flex-direction: column; align-items: flex-start; }
+      .brew-item img { width: 100%; height: 180px; }
+    }
+  </style>
+</head>
+<body id="home">
+
+  <div class="navbar">
+    <div class="nav-left">Coffee Haven</div>
+    <div class="nav-right">
+      <a href="#home">Home</a>
+      <a href="#types">Types</a>
+      <a href="#desserts">Desserts</a>
+      <a href="#brewing">Brewing</a>
+      <button>Log in</button>
+    </div>
+  </div>
+
+  <div class="header-box">
+    <div class="header-info">
+      <h1>Explore Coffee ☕</h1>
+      <p>Learn about different types of coffee beans and discover various brewing methods that bring out the best flavors.</p>
+    </div>
+    <img class="header-img" src="https://i.pinimg.com/1200x/a5/f1/ca/a5f1ca49ad7bbaf61055b66a23335650.jpg" />
+  </div>
+
+  <!-- Coffee Types -->
+  <h2 id="types" class="section-title">Jenis-Jenis Kopi ☕🌿</h2>
+  <div class="coffee-grid">
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/736x/33/44/dc/3344dc2fa3c1e4c28a62f710631d4518.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Arabica</h3>
+      <p>Rasa lebih halus, sedikit asam, dan aroma wangi.</p>
+    </div>
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/736x/94/8c/4a/948c4afa64eac479632a13c64c45631a.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Robusta</h3>
+      <p>Lebih pahit, kadar kafein tinggi, cocok untuk espresso.</p>
+    </div>
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/736x/b9/93/bc/b993bc6f320101e867395c1549ecf7f1.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Liberica</h3>
+      <p>Aroma unik dan rasa smoky yang khas.</p>
+    </div>
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/1200x/b6/fa/0f/b6fa0f2d0039ba03760041a0e333f3b2.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Excelsa</h3>
+      <p>Rasanya fruity, tart, dan sedikit smoky — unik dan kompleks.</p>
+    </div>
+  </div>
+
+  <!-- Coffee Desserts / Menu 10 item -->
+  <h2 id="desserts" class="section-title">Coffee Desserts 🍰</h2>
+  <div class="coffee-grid">
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/1200x/09/e7/0b/09e70b7c16fc2550a0d2bdc242b85146.jpg" />
+      <h3>Tiramisu</h3>
+      <p>Dessert klasik Italia dengan espresso dan mascarpone.</p>
+    </div>
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/1200x/c7/7f/46/c77f46fb9cdb26fc341b5522c3f73ba8.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Coffee Jelly</h3>
+      <p>Agar kopi manis yang segar, cocok dengan susu atau cream.</p>
+    </div>
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/1200x/37/57/e4/3757e4d23f70bf3957ded19132349ab9.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Affogato</h3>
+      <p>Es krim vanilla disiram espresso panas—manis & pahit sempurna.</p>
+    </div>
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/736x/8f/cd/1f/8fcd1ff2ab006afbec14f724c9c06497.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Latte</h3>
+      <p>Kopi espresso dicampur dengan susu panas, lembut dan creamy.</p>
+    </div>
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/1200x/30/7e/00/307e0044059f261bc1209e1d18d9f035.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Cappuccino</h3>
+      <p>Espresso dengan busa susu tebal, rasa seimbang antara pahit dan creamy.</p>
+    </div>
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/736x/f5/83/1a/f5831a1ce50ca509666fbf90809f588c.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Mocha</h3>
+      <p>Perpaduan cokelat dan espresso, manis dan kaya rasa.</p>
+    </div>
+    <!-- 4 menu tambahan -->
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/1200x/b7/46/4d/b7464d3550496def668b3b3e58a20363.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Espresso</h3>
+      <p>Kopi pekat dalam cangkir kecil, nikmat dan menegangkan.</p>
+    </div>
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/736x/c3/04/45/c30445d3c510cd4b2a96b67ed0848474.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Macchiato</h3>
+      <p>Espresso dengan sedikit busa susu, seimbang dan klasik.</p>
+    </div>
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/1200x/f0/be/06/f0be066813d4228727becf18708c302a.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Flat White</h3>
+      <p>Espresso dengan susu panas lembut, creamy tapi tidak terlalu tebal.</p>
+    </div>
+    <div class="coffee-card">
+      <img src="https://i.pinimg.com/1200x/82/77/29/82772987e08be51327bb04885cae35d1.jpg?auto=format&fit=crop&w=400&q=80" />
+      <h3>Irish Coffee</h3>
+      <p>Kopi panas dengan whisky dan krim, hangat dan berani.</p>
+    </div>
+  </div>
+
+  <!-- Brewing / Cara Penyajian Kopi tetap sama -->
+  <h2 id="brewing" class="section-title">Cara Penyajian Kopi ⚙️☕</h2>
+  <div class="brew-list">
+    <div class="brew-item">
+      <img src="https://i.pinimg.com/736x/15/5c/54/155c54317d56b708a77263535cc47918.jpg?auto=format&fit=crop&w=400&q=80" />
+      <div>
+        <h3>1. French Press</h3>
+        <p>Metode sederhana yang menghasilkan kopi dengan body tebal.</p>
+      </div>
+    </div>
+    <div class="brew-item">
+      <img src="https://i.pinimg.com/736x/fc/87/4b/fc874bc62887fa2afe60f85384b8e24a.jpg?auto=format&fit=crop&w=400&q=80" />
+      <div>
+        <h3>2. Espresso Machine</h3>
+        <p>Kopi pekat yang menjadi dasar cappuccino, latte, dan lainnya.</p>
+      </div>
+    </div>
+    <div class="brew-item">
+      <img src="https://i.pinimg.com/736x/24/31/2d/24312d64af6494b079f01a93e2f0310c.jpg?auto=format&fit=crop&w=400&q=80" />
+      <div>
+        <h3>3. Pour Over</h3>
+        <p>Memberikan rasa kopi yang clean dan aromatik.</p>
+      </div>
+    </div>
+    <div class="brew-item">
+      <img src="https://i.pinimg.com/736x/59/79/cd/5979cd904ca4d707e8214f9e541547e4.jpg?auto=format&fit=crop&w=400&q=80" />
+      <div>
+        <h3>4. Cold Brew</h3>
+        <p>Kopi diseduh dingin selama 12 jam untuk rasa yang halus dan tidak asam.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Scroll animation for section titles & coffee cards
+    const sections = document.querySelectorAll('.section-title');
+    const cards = document.querySelectorAll('.coffee-card');
+
+    const options = { threshold: 0.2 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, options);
+
+    sections.forEach(section => observer.observe(section));
+    cards.forEach(card => observer.observe(card));
+
+    // Navbar highlight
+    const navLinks = document.querySelectorAll('.nav-right a');
+    const sectionElements = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href')));
+    window.addEventListener('scroll', () => {
+      let scrollPos = window.scrollY + 100;
+      sectionElements.forEach((section, idx) => {
+        if(section.offsetTop <= scrollPos && (section.offsetTop + section.offsetHeight) > scrollPos){
+          navLinks.forEach(link => link.classList.remove('active'));
+          navLinks[idx].classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
